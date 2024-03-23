@@ -13,14 +13,18 @@ Strictly speaking, no. It's trivial to have an atomic counter that will give
 you nice, simple, sequential ID's in a thread-safe manner, no strings attached.
 But since when was programming strictly useful?
 
+The one thing this provides over a global ID generator is basic generational
+information. Each `Id` keeps track of its parent and its depth, allowing you to
+compare ID's for depth and trace a lineage back to the root.
+
 ## Why's it so big?
 
-Each `Id` is 32 bytes to avoid collisions. If you're certain that you're
-done creating children from a given `Id`, you can convert it into a `u128` to
-half that size.
+Each `Id` is 32 bytes to avoid collisions. If you're certain that you're done
+creating children from a given `Id`, you can convert it into its final `u128`
+to half that size via `.id()`.
 
 Note that this is a one-way operation: you cannot turn a `u128` back into an
-`Id`, since that would likely lead to duplicates and bad times.
+`Id`, since information is lost in the process (e.g. generational information).
 
 The one exception is with feature `serde`: it enables [`serde`] support. Note
 that this serialization loses no information, it serializes the whole `Id` and
