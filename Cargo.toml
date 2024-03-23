@@ -1,0 +1,12 @@
+[package]
+name = "ids"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+fnv = { version = "1.0.7", default-features = false }
+serde = { version = "1.0", features = ["derive"], optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
