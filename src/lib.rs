@@ -61,7 +61,7 @@ impl Id {
 
     /// Generate a new, unique `Id` from this one.
     pub fn next_id(&mut self) -> Id {
-        self.gen = self.gen.wrapping_add(3);
+        self.gen = self.gen.wrapping_add(1);
 
         let mut state = FnvHasher::default();
         self.id.hash(&mut state);
@@ -148,6 +148,26 @@ mod test {
 
             queue.push_back(next);
             queue.push_back(current);
+        }
+    }
+
+    #[test]
+    #[ignore = "very expensive"]
+    fn no_root_duplicates() {
+        //! Ensure that `root` doesn't generate duplicate ID's too quickly.
+        //! **WARNING**: also CPU/RAM intensive
+
+        let mut set = HashSet::new();
+        let mut root = Id::root();
+        for i in 0..100_000_000 {
+            let next = root.next_id();
+            if !set.insert(next.id()) {
+                panic!(
+                    "collision at {i} (id={} gen={})",
+                    next.id(),
+                    root.num_children(),
+                );
+            }
         }
     }
 }
