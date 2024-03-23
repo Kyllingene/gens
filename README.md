@@ -1,7 +1,8 @@
-# `::ids`
+# `::gens`
 
 Provides [`Id`], a cheap numerical identifier that has the ability to create
-new, unique `Id`s without external state*.
+new, unique `Id`s without external state*, as well as providing basic
+generational information.
 
 *technically, there _is_ one static, to ensure that subsequent calls to
 `Id::root` don't immediately generate duplicate ID's. Past that, every `Id` is
@@ -33,7 +34,7 @@ thus will never lead to duplicate ID's.
 ## Give me some code
 
 ```rust
-use ids::Id;
+use gens::Id;
 
 let mut root = Id::root();
 
