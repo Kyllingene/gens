@@ -1,12 +1,8 @@
 # `::gens`
 
 Provides [`Id`], a cheap numerical identifier that has the ability to create
-new, unique `Id`s without external state*, as well as providing basic
+new, unique `Id`s without external state, as well as providing basic
 generational information.
-
-*technically, there _is_ one static, to ensure that subsequent calls to
-`Id::root` don't immediately generate duplicate ID's. Past that, every `Id` is
-entirely self-contained.
 
 ## Is this useful?
 
